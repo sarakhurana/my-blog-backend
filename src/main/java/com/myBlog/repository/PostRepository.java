@@ -19,4 +19,13 @@ public interface PostRepository extends JpaRepository {
     static void savePost(PostResponse postResponse) {
         postsArray.add(postResponse);
     }
+
+    static void deleteAllEntries(){
+        postsArray.clear();
+    }
+
+     static void deletePost(String id){
+        postsArray.removeIf(post -> post.getPostId() == id);
+    }
+
 }

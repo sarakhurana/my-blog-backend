@@ -3,6 +3,7 @@ package com.myBlog.repository;
 
 import com.myBlog.response.PostResponse;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,9 +16,9 @@ public class PostRepositoryTest {
     @Autowired
     private PostRepository postRepository;
 
-    @Before
+    @BeforeEach
     public void setup() {
-        postRepository.deleteAll();
+        PostRepository.deleteAllEntries();
     }
 
     @Test
@@ -27,9 +28,10 @@ public class PostRepositoryTest {
         PostRepository.savePost(postResponse);
         List<PostResponse> allPosts = PostRepository.getAllPosts();
 
-        assertEquals(allPosts.size(),1);
+        assertEquals(allPosts.size(), 1);
     }
-        @Test
+
+    @Test
     public void getAllPostsShouldReturnAllPosts() {
         PostResponse postResponse1 = new PostResponse("3", "New Post");
         PostResponse postResponse2 = new PostResponse("2", "Hello, New Post");
@@ -38,6 +40,21 @@ public class PostRepositoryTest {
 
         List<PostResponse> allPosts = PostRepository.getAllPosts();
 
-        assertEquals(allPosts.size(),2);
+        assertEquals(allPosts.size(), 2);
+    }
+
+    @Test
+    public void deletePostShouldDeleteGivenPost() {
+        PostResponse postResponse = new PostResponse("1", "New Post");
+
+        PostRepository.savePost(postResponse);
+        List<PostResponse> allPosts = PostRepository.getAllPosts();
+
+        assertEquals(allPosts.size(), 1);
+
+        PostRepository.deletePost(postResponse.getPostId());
+        List<PostResponse> updatedPosts = PostRepository.getAllPosts();
+
+        assertEquals(updatedPosts.size(),0);
     }
 }
