@@ -1,8 +1,7 @@
 package com.myBlog.repository;
 
 
-import com.myBlog.response.PostResponse;
-import org.junit.Before;
+import com.myBlog.entity.PostResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

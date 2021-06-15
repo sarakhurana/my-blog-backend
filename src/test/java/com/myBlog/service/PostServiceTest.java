@@ -1,7 +1,7 @@
 package com.myBlog.service;
 
 import com.myBlog.repository.PostRepository;
-import com.myBlog.response.PostResponse;
+import com.myBlog.entity.PostResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
