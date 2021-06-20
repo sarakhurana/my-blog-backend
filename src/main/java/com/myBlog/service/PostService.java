@@ -1,7 +1,7 @@
 package com.myBlog.service;
 
 import com.myBlog.repository.PostRepository;
-import com.myBlog.entity.PostResponse;
+import com.myBlog.entity.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +16,13 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public List<PostResponse> fetchAllPosts() {
-        return PostRepository.getAllPosts();
+    public List<Post> fetchAllPosts() {
+        return postRepository.getAllPosts();
     }
 
-    public void saveNewPost(PostResponse postResponse) {
-        if (postResponse != null)
-            PostRepository.savePost(postResponse);
+    public void saveNewPost(Post post) {
+        if (post != null)
+                postRepository.savePost(post);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.myBlog.service;
 
 import com.myBlog.repository.PostRepository;
-import com.myBlog.entity.PostResponse;
+import com.myBlog.entity.Post;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +9,12 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostServiceTest {
@@ -23,26 +27,28 @@ public class PostServiceTest {
     @Before
     public void setUp() {
         postService = new PostService(postRepository);
-        PostRepository.deleteAllEntries();
+        postRepository.deleteAllEntries();
     }
 
     @Test
     public void shouldFetchAllPosts() {
-        PostResponse postResponse = new PostResponse("1", "New Post");
+        Post post = new Post("1", "New Post");
 
-        PostRepository.savePost(postResponse);
-        List<PostResponse> allPosts = postService.fetchAllPosts();
+        when(postRepository.getAllPosts()).thenReturn(List.of(post));
+        List<Post> allPosts = postService.fetchAllPosts();
 
-        assertEquals(allPosts, List.of(postResponse));
+        assertEquals(allPosts, List.of(post));
     }
 
     @Test
     public void shouldSaveGivenPost() {
-        PostResponse postResponse = new PostResponse("1", "New Post");
-        postService.saveNewPost(postResponse);
+        Post post = new Post("1", "New Post");
 
-        List<PostResponse> allPosts = postService.fetchAllPosts();
-        assertEquals(allPosts, List.of(postResponse));
+        when(postRepository.savePost(any())).thenReturn(Optional.ofNullable(post));
+        postService.saveNewPost(post);
+
+        verify(postRepository).savePost(eq(post));
+        verify(postRepository, times(1)).savePost(any(Post.class));
 
     }
 }

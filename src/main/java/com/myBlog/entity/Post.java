@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PostResponse {
+public class Post {
     @Id
     private String postId;
     private String postBody;
