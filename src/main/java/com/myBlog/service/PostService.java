@@ -20,9 +20,11 @@ public class PostService {
         return postRepository.getAllPosts();
     }
 
-    public void saveNewPost(Post post) {
-        if (post != null)
-                postRepository.savePost(post);
+    public Boolean saveNewPost(Post post) {
+        if (post != null) {
+            postRepository.savePost(post);
+            return true;
+        }
+        return false;
     }
-
 }
