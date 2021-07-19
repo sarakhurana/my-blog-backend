@@ -10,19 +10,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-    private PostRepository postRepository;
-
-    PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+    private final PostRepository postRepository;
 
     public List<Post> fetchAllPosts() {
-        return postRepository.getAllPosts();
+        return postRepository.findAll();
     }
 
     public Boolean saveNewPost(Post post) {
         if (post != null) {
-            postRepository.savePost(post);
+            postRepository.save(post);
             return true;
         }
         return false;

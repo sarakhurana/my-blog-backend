@@ -22,15 +22,15 @@ public class PostRepositoryTest {
 
     @BeforeEach
     public void setup() {
-        postRepository.deleteAllEntries();
+        postRepository.deleteAll();
     }
 
     @Test
     public void savePostShouldAddANewPostToPostArray() {
         Post post = new Post("3", "New Post");
 
-        postRepository.savePost(post);
-        List<Post> allPosts = postRepository.getAllPosts();
+        postRepository.save(post);
+        List<Post> allPosts = postRepository.findAll();
 
         assertEquals(allPosts.size(), 1);
     }
@@ -39,10 +39,10 @@ public class PostRepositoryTest {
     public void getAllPostsShouldReturnAllPosts() {
         Post post1 = new Post("3", "New Post");
         Post post2 = new Post("2", "Hello, New Post");
-        postRepository.savePost(post1);
-        postRepository.savePost(post2);
+        postRepository.save(post1);
+        postRepository.save(post2);
 
-        List<Post> allPosts = postRepository.getAllPosts();
+        List<Post> allPosts = postRepository.findAll();
 
         assertEquals(allPosts.size(), 2);
     }
@@ -51,13 +51,13 @@ public class PostRepositoryTest {
     public void deletePostShouldDeleteGivenPost() {
         Post post = new Post("1", "New Post");
 
-        postRepository.savePost(post);
-        List<Post> allPosts = postRepository.getAllPosts();
+        postRepository.save(post);
+        List<Post> allPosts = postRepository.findAll();
 
         assertEquals(allPosts.size(), 1);
 
-        postRepository.deletePost(post.getPostId());
-        List<Post> updatedPosts = postRepository.getAllPosts();
+        postRepository.deleteById(post.getPostId());
+        List<Post> updatedPosts = postRepository.findAll();
 
         assertEquals(updatedPosts.size(),0);
     }

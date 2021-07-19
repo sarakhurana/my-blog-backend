@@ -27,14 +27,14 @@ public class PostServiceTest {
     @Before
     public void setUp() {
         postService = new PostService(postRepository);
-        postRepository.deleteAllEntries();
+        postRepository.deleteAll();
     }
 
     @Test
     public void shouldFetchAllPosts() {
         Post post = new Post("1", "New Post");
 
-        when(postRepository.getAllPosts()).thenReturn(List.of(post));
+        when(postRepository.findAll()).thenReturn(List.of(post));
         List<Post> allPosts = postService.fetchAllPosts();
 
         assertEquals(allPosts, List.of(post));
@@ -44,11 +44,11 @@ public class PostServiceTest {
     public void shouldSaveGivenPost() {
         Post post = new Post("1", "New Post");
 
-        when(postRepository.savePost(any())).thenReturn(Optional.ofNullable(post));
+        when(postRepository.save(any())).thenReturn(Optional.of(post));
         postService.saveNewPost(post);
 
-        verify(postRepository).savePost(eq(post));
-        verify(postRepository, times(1)).savePost(any(Post.class));
+        verify(postRepository).save(eq(post));
+        verify(postRepository, times(1)).save(any(Post.class));
 
     }
 }

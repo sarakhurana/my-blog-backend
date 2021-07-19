@@ -1,14 +1,11 @@
 package com.myBlog.controller;
 
 import com.myBlog.entity.Post;
-import com.myBlog.repository.PostRepository;
 import com.myBlog.service.PostService;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -45,7 +42,7 @@ public class PostControllerTest {
                 .perform(get("/my-blog").contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andReturn().getResponse();
 
-        String expectedResponse = "[{\"postId\":\"1\",\"postBody\":\"Hello\"}]";
+        String expectedResponse = "[{\"postId\":\"1\",\"body\":\"Hello\"}]";
 
         assertEquals(expectedResponse, actualResponse.getContentAsString());
     }
@@ -53,7 +50,7 @@ public class PostControllerTest {
     @Test
     public void savePostShouldSavePost() throws Exception {
         Post dummyPost = new Post("1", "Hello");
-        String post = "{\"postId\":\"1\",\"postBody\":\"Hello\"}";
+        String post = "{\"postId\":\"1\",\"body\":\"Hello\"}";
 
         MockHttpServletResponse actualResponse = mockMvc
                 .perform(post("/my-blog").contentType(MediaType.APPLICATION_JSON_VALUE)
